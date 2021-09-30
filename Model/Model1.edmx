@@ -1,0 +1,376 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="reservacionesModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Cities">
+          <Key>
+            <PropertyRef Name="pkCity" />
+          </Key>
+          <Property Name="pkCity" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Hotels">
+          <Key>
+            <PropertyRef Name="pkHotel" />
+          </Key>
+          <Property Name="pkHotel" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="HotelsInCities">
+          <Key>
+            <PropertyRef Name="pkHotelsInCitiespkHotelsInCities" />
+          </Key>
+          <Property Name="pkHotelsInCitiespkHotelsInCities" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fkHotel" Type="int" Nullable="false" />
+          <Property Name="fkCity" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PricePerHabitationInCity">
+          <Key>
+            <PropertyRef Name="pkPricePerHabitation" />
+          </Key>
+          <Property Name="pkPricePerHabitation" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fkCity" Type="int" Nullable="false" />
+          <Property Name="fkStagesAndAges" Type="int" Nullable="false" />
+          <Property Name="fkRoom" Type="int" Nullable="false" />
+          <Property Name="price" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Rooms">
+          <Key>
+            <PropertyRef Name="pkRoom" />
+          </Key>
+          <Property Name="pkRoom" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StagesAndAges">
+          <Key>
+            <PropertyRef Name="pkStageAndAge" />
+          </Key>
+          <Property Name="pkStageAndAge" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Cities_HotelsInCities">
+          <End Role="Cities" Type="Self.Cities" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="HotelsInCities" Type="Self.HotelsInCities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cities">
+              <PropertyRef Name="pkCity" />
+            </Principal>
+            <Dependent Role="HotelsInCities">
+              <PropertyRef Name="fkCity" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cities_PricePerHabitationInCity">
+          <End Role="Cities" Type="Self.Cities" Multiplicity="1" />
+          <End Role="PricePerHabitationInCity" Type="Self.PricePerHabitationInCity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cities">
+              <PropertyRef Name="pkCity" />
+            </Principal>
+            <Dependent Role="PricePerHabitationInCity">
+              <PropertyRef Name="fkCity" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Hotels_HotelsInCities">
+          <End Role="Hotels" Type="Self.Hotels" Multiplicity="1" />
+          <End Role="HotelsInCities" Type="Self.HotelsInCities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hotels">
+              <PropertyRef Name="pkHotel" />
+            </Principal>
+            <Dependent Role="HotelsInCities">
+              <PropertyRef Name="fkHotel" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rooms_PricePerHabitationInCity">
+          <End Role="Rooms" Type="Self.Rooms" Multiplicity="1" />
+          <End Role="PricePerHabitationInCity" Type="Self.PricePerHabitationInCity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rooms">
+              <PropertyRef Name="pkRoom" />
+            </Principal>
+            <Dependent Role="PricePerHabitationInCity">
+              <PropertyRef Name="fkRoom" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StagesAndAges_PricePerHabitationInCity">
+          <End Role="StagesAndAges" Type="Self.StagesAndAges" Multiplicity="1" />
+          <End Role="PricePerHabitationInCity" Type="Self.PricePerHabitationInCity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StagesAndAges">
+              <PropertyRef Name="pkStageAndAge" />
+            </Principal>
+            <Dependent Role="PricePerHabitationInCity">
+              <PropertyRef Name="fkStagesAndAges" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="reservacionesModelStoreContainer">
+          <EntitySet Name="Cities" EntityType="Self.Cities" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Hotels" EntityType="Self.Hotels" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HotelsInCities" EntityType="Self.HotelsInCities" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PricePerHabitationInCity" EntityType="Self.PricePerHabitationInCity" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rooms" EntityType="Self.Rooms" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StagesAndAges" EntityType="Self.StagesAndAges" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Cities_HotelsInCities" Association="Self.FK_Cities_HotelsInCities">
+            <End Role="Cities" EntitySet="Cities" />
+            <End Role="HotelsInCities" EntitySet="HotelsInCities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cities_PricePerHabitationInCity" Association="Self.FK_Cities_PricePerHabitationInCity">
+            <End Role="Cities" EntitySet="Cities" />
+            <End Role="PricePerHabitationInCity" EntitySet="PricePerHabitationInCity" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Hotels_HotelsInCities" Association="Self.FK_Hotels_HotelsInCities">
+            <End Role="Hotels" EntitySet="Hotels" />
+            <End Role="HotelsInCities" EntitySet="HotelsInCities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rooms_PricePerHabitationInCity" Association="Self.FK_Rooms_PricePerHabitationInCity">
+            <End Role="Rooms" EntitySet="Rooms" />
+            <End Role="PricePerHabitationInCity" EntitySet="PricePerHabitationInCity" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StagesAndAges_PricePerHabitationInCity" Association="Self.FK_StagesAndAges_PricePerHabitationInCity">
+            <End Role="StagesAndAges" EntitySet="StagesAndAges" />
+            <End Role="PricePerHabitationInCity" EntitySet="PricePerHabitationInCity" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="reservacionesModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Cities">
+          <Key>
+            <PropertyRef Name="pkCity" />
+          </Key>
+          <Property Name="pkCity" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="HotelsInCities" Relationship="Self.FK_Cities_HotelsInCities" FromRole="Cities" ToRole="HotelsInCities" />
+          <NavigationProperty Name="PricePerHabitationInCity" Relationship="Self.FK_Cities_PricePerHabitationInCity" FromRole="Cities" ToRole="PricePerHabitationInCity" />
+        </EntityType>
+        <EntityType Name="Hotels">
+          <Key>
+            <PropertyRef Name="pkHotel" />
+          </Key>
+          <Property Name="pkHotel" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="HotelsInCities" Relationship="Self.FK_Hotels_HotelsInCities" FromRole="Hotels" ToRole="HotelsInCities" />
+        </EntityType>
+        <EntityType Name="HotelsInCities">
+          <Key>
+            <PropertyRef Name="pkHotelsInCitiespkHotelsInCities" />
+          </Key>
+          <Property Name="pkHotelsInCitiespkHotelsInCities" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fkHotel" Type="Int32" Nullable="false" />
+          <Property Name="fkCity" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Cities" Relationship="Self.FK_Cities_HotelsInCities" FromRole="HotelsInCities" ToRole="Cities" />
+          <NavigationProperty Name="Hotels" Relationship="Self.FK_Hotels_HotelsInCities" FromRole="HotelsInCities" ToRole="Hotels" />
+        </EntityType>
+        <EntityType Name="PricePerHabitationInCity">
+          <Key>
+            <PropertyRef Name="pkPricePerHabitation" />
+          </Key>
+          <Property Name="pkPricePerHabitation" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fkCity" Type="Int32" Nullable="false" />
+          <Property Name="fkStagesAndAges" Type="Int32" Nullable="false" />
+          <Property Name="fkRoom" Type="Int32" Nullable="false" />
+          <Property Name="price" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <NavigationProperty Name="Cities" Relationship="Self.FK_Cities_PricePerHabitationInCity" FromRole="PricePerHabitationInCity" ToRole="Cities" />
+          <NavigationProperty Name="Rooms" Relationship="Self.FK_Rooms_PricePerHabitationInCity" FromRole="PricePerHabitationInCity" ToRole="Rooms" />
+          <NavigationProperty Name="StagesAndAges" Relationship="Self.FK_StagesAndAges_PricePerHabitationInCity" FromRole="PricePerHabitationInCity" ToRole="StagesAndAges" />
+        </EntityType>
+        <EntityType Name="Rooms">
+          <Key>
+            <PropertyRef Name="pkRoom" />
+          </Key>
+          <Property Name="pkRoom" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="PricePerHabitationInCity" Relationship="Self.FK_Rooms_PricePerHabitationInCity" FromRole="Rooms" ToRole="PricePerHabitationInCity" />
+        </EntityType>
+        <EntityType Name="StagesAndAges">
+          <Key>
+            <PropertyRef Name="pkStageAndAge" />
+          </Key>
+          <Property Name="pkStageAndAge" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="PricePerHabitationInCity" Relationship="Self.FK_StagesAndAges_PricePerHabitationInCity" FromRole="StagesAndAges" ToRole="PricePerHabitationInCity" />
+        </EntityType>
+        <Association Name="FK_Cities_HotelsInCities">
+          <End Role="Cities" Type="Self.Cities" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="HotelsInCities" Type="Self.HotelsInCities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cities">
+              <PropertyRef Name="pkCity" />
+            </Principal>
+            <Dependent Role="HotelsInCities">
+              <PropertyRef Name="fkCity" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cities_PricePerHabitationInCity">
+          <End Role="Cities" Type="Self.Cities" Multiplicity="1" />
+          <End Role="PricePerHabitationInCity" Type="Self.PricePerHabitationInCity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cities">
+              <PropertyRef Name="pkCity" />
+            </Principal>
+            <Dependent Role="PricePerHabitationInCity">
+              <PropertyRef Name="fkCity" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Hotels_HotelsInCities">
+          <End Role="Hotels" Type="Self.Hotels" Multiplicity="1" />
+          <End Role="HotelsInCities" Type="Self.HotelsInCities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hotels">
+              <PropertyRef Name="pkHotel" />
+            </Principal>
+            <Dependent Role="HotelsInCities">
+              <PropertyRef Name="fkHotel" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rooms_PricePerHabitationInCity">
+          <End Role="Rooms" Type="Self.Rooms" Multiplicity="1" />
+          <End Role="PricePerHabitationInCity" Type="Self.PricePerHabitationInCity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rooms">
+              <PropertyRef Name="pkRoom" />
+            </Principal>
+            <Dependent Role="PricePerHabitationInCity">
+              <PropertyRef Name="fkRoom" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StagesAndAges_PricePerHabitationInCity">
+          <End Role="StagesAndAges" Type="Self.StagesAndAges" Multiplicity="1" />
+          <End Role="PricePerHabitationInCity" Type="Self.PricePerHabitationInCity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StagesAndAges">
+              <PropertyRef Name="pkStageAndAge" />
+            </Principal>
+            <Dependent Role="PricePerHabitationInCity">
+              <PropertyRef Name="fkStagesAndAges" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="reservacionesEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Cities" EntityType="Self.Cities" />
+          <EntitySet Name="Hotels" EntityType="Self.Hotels" />
+          <EntitySet Name="HotelsInCities" EntityType="Self.HotelsInCities" />
+          <EntitySet Name="PricePerHabitationInCity" EntityType="Self.PricePerHabitationInCity" />
+          <EntitySet Name="Rooms" EntityType="Self.Rooms" />
+          <EntitySet Name="StagesAndAges" EntityType="Self.StagesAndAges" />
+          <AssociationSet Name="FK_Cities_HotelsInCities" Association="Self.FK_Cities_HotelsInCities">
+            <End Role="Cities" EntitySet="Cities" />
+            <End Role="HotelsInCities" EntitySet="HotelsInCities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cities_PricePerHabitationInCity" Association="Self.FK_Cities_PricePerHabitationInCity">
+            <End Role="Cities" EntitySet="Cities" />
+            <End Role="PricePerHabitationInCity" EntitySet="PricePerHabitationInCity" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Hotels_HotelsInCities" Association="Self.FK_Hotels_HotelsInCities">
+            <End Role="Hotels" EntitySet="Hotels" />
+            <End Role="HotelsInCities" EntitySet="HotelsInCities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rooms_PricePerHabitationInCity" Association="Self.FK_Rooms_PricePerHabitationInCity">
+            <End Role="Rooms" EntitySet="Rooms" />
+            <End Role="PricePerHabitationInCity" EntitySet="PricePerHabitationInCity" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StagesAndAges_PricePerHabitationInCity" Association="Self.FK_StagesAndAges_PricePerHabitationInCity">
+            <End Role="StagesAndAges" EntitySet="StagesAndAges" />
+            <End Role="PricePerHabitationInCity" EntitySet="PricePerHabitationInCity" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="reservacionesModelStoreContainer" CdmEntityContainer="reservacionesEntities">
+          <EntitySetMapping Name="Cities">
+            <EntityTypeMapping TypeName="reservacionesModel.Cities">
+              <MappingFragment StoreEntitySet="Cities">
+                <ScalarProperty Name="pkCity" ColumnName="pkCity" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Hotels">
+            <EntityTypeMapping TypeName="reservacionesModel.Hotels">
+              <MappingFragment StoreEntitySet="Hotels">
+                <ScalarProperty Name="pkHotel" ColumnName="pkHotel" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HotelsInCities">
+            <EntityTypeMapping TypeName="reservacionesModel.HotelsInCities">
+              <MappingFragment StoreEntitySet="HotelsInCities">
+                <ScalarProperty Name="pkHotelsInCitiespkHotelsInCities" ColumnName="pkHotelsInCitiespkHotelsInCities" />
+                <ScalarProperty Name="fkHotel" ColumnName="fkHotel" />
+                <ScalarProperty Name="fkCity" ColumnName="fkCity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PricePerHabitationInCity">
+            <EntityTypeMapping TypeName="reservacionesModel.PricePerHabitationInCity">
+              <MappingFragment StoreEntitySet="PricePerHabitationInCity">
+                <ScalarProperty Name="pkPricePerHabitation" ColumnName="pkPricePerHabitation" />
+                <ScalarProperty Name="fkCity" ColumnName="fkCity" />
+                <ScalarProperty Name="fkStagesAndAges" ColumnName="fkStagesAndAges" />
+                <ScalarProperty Name="fkRoom" ColumnName="fkRoom" />
+                <ScalarProperty Name="price" ColumnName="price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rooms">
+            <EntityTypeMapping TypeName="reservacionesModel.Rooms">
+              <MappingFragment StoreEntitySet="Rooms">
+                <ScalarProperty Name="pkRoom" ColumnName="pkRoom" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StagesAndAges">
+            <EntityTypeMapping TypeName="reservacionesModel.StagesAndAges">
+              <MappingFragment StoreEntitySet="StagesAndAges">
+                <ScalarProperty Name="pkStageAndAge" ColumnName="pkStageAndAge" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

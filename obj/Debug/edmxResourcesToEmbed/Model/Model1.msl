@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="reservacionesModelStoreContainer" CdmEntityContainer="reservacionesEntities">
+    <EntitySetMapping Name="Cities">
+      <EntityTypeMapping TypeName="reservacionesModel.Cities">
+        <MappingFragment StoreEntitySet="Cities">
+          <ScalarProperty Name="pkCity" ColumnName="pkCity" />
+          <ScalarProperty Name="name" ColumnName="name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Hotels">
+      <EntityTypeMapping TypeName="reservacionesModel.Hotels">
+        <MappingFragment StoreEntitySet="Hotels">
+          <ScalarProperty Name="pkHotel" ColumnName="pkHotel" />
+          <ScalarProperty Name="name" ColumnName="name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="HotelsInCities">
+      <EntityTypeMapping TypeName="reservacionesModel.HotelsInCities">
+        <MappingFragment StoreEntitySet="HotelsInCities">
+          <ScalarProperty Name="pkHotelsInCitiespkHotelsInCities" ColumnName="pkHotelsInCitiespkHotelsInCities" />
+          <ScalarProperty Name="fkHotel" ColumnName="fkHotel" />
+          <ScalarProperty Name="fkCity" ColumnName="fkCity" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PricePerHabitationInCity">
+      <EntityTypeMapping TypeName="reservacionesModel.PricePerHabitationInCity">
+        <MappingFragment StoreEntitySet="PricePerHabitationInCity">
+          <ScalarProperty Name="pkPricePerHabitation" ColumnName="pkPricePerHabitation" />
+          <ScalarProperty Name="fkCity" ColumnName="fkCity" />
+          <ScalarProperty Name="fkStagesAndAges" ColumnName="fkStagesAndAges" />
+          <ScalarProperty Name="fkRoom" ColumnName="fkRoom" />
+          <ScalarProperty Name="price" ColumnName="price" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Rooms">
+      <EntityTypeMapping TypeName="reservacionesModel.Rooms">
+        <MappingFragment StoreEntitySet="Rooms">
+          <ScalarProperty Name="pkRoom" ColumnName="pkRoom" />
+          <ScalarProperty Name="name" ColumnName="name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StagesAndAges">
+      <EntityTypeMapping TypeName="reservacionesModel.StagesAndAges">
+        <MappingFragment StoreEntitySet="StagesAndAges">
+          <ScalarProperty Name="pkStageAndAge" ColumnName="pkStageAndAge" />
+          <ScalarProperty Name="name" ColumnName="name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
